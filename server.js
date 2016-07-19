@@ -1,7 +1,10 @@
 var express           = require('express'),
     app               = express(),
     bodyParser        = require('body-parser'),
+    mongoose          = require('mongoose'),
     meetupsController = require('./server/controllers/meetups-controller.js')
+
+mongoose.connect('mongodb://localhost:27017/meetups-mean-demo')
 
 app.use(bodyParser());
 
@@ -11,6 +14,8 @@ app.get('/', function (req, res) {
 
 app.use('/js', express.static(__dirname + '/client/js'));
 
+// REST Api
+app.get('/api/meetups', meetupsController.list);
 app.post('/api/meetups', meetupsController.create);
 
 
